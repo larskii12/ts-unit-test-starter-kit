@@ -22,11 +22,11 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # docker image 
     steps:
-      - name: Checkout
+      - name: Checkout # standard scripts from github
         uses: actions/checkout@v4
-      - name: Set up Node
+      - name: Set up Node # standard scripts from github
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -36,9 +36,11 @@ jobs:
       - name: Build
         run: npm run build
       # Begin automated tests
+      - name: Test
+        run: npm run test
       # End automated tests
   deploy:
-    needs: test
+    needs: test # don't deploy until the test pass
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
